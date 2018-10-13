@@ -30,7 +30,7 @@ print("listening on:", bindAddr)
 class ServerThread(Thread):
     requestCount = 0            # one instance / class
     test=0
-    openFiles= {}
+    openFiles= {} #Dictionary containing access locks for every file opened.
     def __init__(self, sock, debug):
         Thread.__init__(self, daemon=True)
         self.fsock, self.debug = FramedStreamSock(sock, debug), debug
@@ -57,11 +57,11 @@ class ServerThread(Thread):
 
 
             if protocol == "PUT":
-                try:
+                try: #Try to obtain the lock from the dictionary.
                     getLock = self.openFiles[file_name]
-                except:
+                except: #Lock the file if not in use.
                     self.openFiles[file_name] =  threading.Lock()
-                with self.openFiles[file_name]:
+                with self.openFiles[file_name]: #Write to locked file and release once done.
                     ServerThread.test += 1;
                     while not bufferIsComplete:
                         tempStr = self.fsock.receivemsg()
@@ -89,11 +89,11 @@ class ServerThread(Thread):
 
 
             elif protocol== "GET": #Read file same as client and send 100 bytes at a time.
-                try:
+                try: #Check if lock is existing. If not create it.
                     getLock = self.openFiles[file_name]
                 except:
                     self.openFiles[file_name] =  threading.Lock()
-                with self.openFiles[file_name]:
+                with self.openFiles[file_name]: #Lock the access until its done sending the file.
                     print(str(ServerThread.test) + " get")
                     with open("filesFolder/server/" + file_name, 'r') as outputFile:
                         currBuf += outputFile.read().strip()

@@ -10,7 +10,7 @@ import time
 
 switchesVarDefaults = ( #Default parameters
     (('-s', '--server'), 'server', "127.0.0.1:50000"),
-    (('-f', '--fileName') , 'file_name', "fileFromClient.txt"),
+    (('-f', '--fileName') , 'file_name', "fileFromServer.txt"),
     (('-p', '--protocol') , 'protocol', "GET"),
     (('-d', '--debug'), "debug", False), # boolean (set if present)
     (('-?', '--usage'), "usage", False), # boolean (set if present)
