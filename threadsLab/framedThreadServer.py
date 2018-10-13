@@ -36,7 +36,7 @@ class ServerThread(Thread):
         self.fsock, self.debug = FramedStreamSock(sock, debug), debug
         self.start()
     def run(self):
-        currBuf = ""
+        currBuf = "" #Variables we need for method.
         bufferIsComplete = False
         file_name= ""
         protocol= ""
@@ -46,7 +46,6 @@ class ServerThread(Thread):
                 if self.debug: print(self.fsock, "server thread done")
                 return
             requestNum = ServerThread.requestCount
-            # time.sleep(2)
             ServerThread.requestCount = requestNum + 1
 
             if not file_name: #If file name is empty, that means we are recieving parameters.
@@ -110,9 +109,6 @@ class ServerThread(Thread):
                     print("Sucessfully sent file.")
 
         print("Connection Terminated")
-
-            # msg = ("%s! (%d)" % (msg, requestNum)).encode()
-            # self.fsock.sendmsg(msg)
 
 
 while True:

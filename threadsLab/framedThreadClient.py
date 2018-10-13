@@ -116,14 +116,6 @@ class ClientThread(Thread):
                    outputFile.close()
        except Exception as e:
            print(e)
-           # print("There has been an error, please try again with an existing file.")
-
-       # print("sending hello world")
-       # fs.sendmsg(b"hello world")
-       # print("received:", fs.receivemsg())
-       #
-       # fs.sendmsg(b"hello world")
-       # print("received:", fs.receivemsg())
 
 for i in range(1):
     ClientThread(serverHost, serverPort, debug)
